@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 
+import {NavigationActions} from 'react-navigation';
 
 import {Card, CardItem, Body, Title, Text} from 'native-base';
 
@@ -12,7 +13,10 @@ export default class ListingItem extends Component {
 		return (
 			<Card>
 
-				<CardItem header bordered>
+				<CardItem header bordered button
+				          onPress={() => {
+				          	this.props.navigation.navigate('Single', {id: this.props.id});
+				          }}>
 					<Text>{this.props.title}</Text>
 				</CardItem>
 				<CardItem bordered>

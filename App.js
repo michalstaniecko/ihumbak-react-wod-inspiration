@@ -19,6 +19,7 @@ import {
 	createDrawerNavigator,
 	createSwitchNavigator,
 	createAppContainer,
+	StackActions,
 	DrawerActions,
 	DrawerItems
 } from "react-navigation";
@@ -27,11 +28,12 @@ import {
 import Logo from './Components/Logo';
 import Main from './Views/Main';
 import Listing from './Views/Listing';
+import ListingStackNavigator from './Views/ListingStack';
 import Login from './Views/Login';
 import Account from './Views/Account';
 import Logout from './Views/Logout';
 import Start from './Views/Start';
-
+import Single from './Views/Single';
 
 
 const MainDrawer = createDrawerNavigator({
@@ -43,7 +45,7 @@ const MainDrawer = createDrawerNavigator({
 		}),
 	},
 	Listing: {
-		screen: Listing,
+		screen: ListingStackNavigator,
 		navigationOptions: ({navigation}) => ({
 			title: 'Public Workouts',
 			drawerLabel: 'Public Workouts'
@@ -69,6 +71,9 @@ const MainDrawer = createDrawerNavigator({
 		screen: Logout,
 		navigationOptions: ({navigation}) => ({})
 	},
+	Single: {
+		screen: Single,
+	}
 }, {
 	contentComponent: props => menu(props)
 });
@@ -97,13 +102,22 @@ const LoginDrawer = createDrawerNavigator({
 	}
 });
 
+
+const hiddenDrawerItems = [
+	'Single'
+];
+
 function menu(props) {
+	const clonedProps = {
+		...props,
+		items: props.items.filter(item => !hiddenDrawerItems.includes(item.key))
+	};
 	return (
 
 		<ScrollView>
 			<SafeAreaView>
 				<Text>Header</Text>
-				<DrawerItems {...props} />
+				<DrawerItems {...clonedProps} />
 			</SafeAreaView>
 		</ScrollView>
 	)

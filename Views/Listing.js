@@ -80,8 +80,10 @@ export default class Listing extends Component {
 	_renderListing = ({item}) => {
 		return (
 			<ListingItem
+				navigation={this.props.navigation}
 				title={item.title.rendered}
 				wod_description={item.wod_meta.wod_description}
+				id={item.id}
 			/>
 		);
 	};
@@ -159,7 +161,7 @@ export default class Listing extends Component {
 		return (
 			<Container>
 
-				<TopBar title={title} navigation={this.props.navigation}/>
+				<TopBar title={this.state.listingType} navigation={this.props.navigation}/>
 
 				<Content
 					padder
