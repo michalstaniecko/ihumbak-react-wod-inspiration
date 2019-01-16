@@ -36,7 +36,7 @@ import Start from './Views/Start';
 import Single from './Views/Single';
 
 
-const MainDrawer = createDrawerNavigator({
+export const MainDrawer = createDrawerNavigator({
 	Main: {
 		screen: Main,
 		navigationOptions: ({navigation}) => ({
@@ -70,9 +70,6 @@ const MainDrawer = createDrawerNavigator({
 	Logout: {
 		screen: Logout,
 		navigationOptions: ({navigation}) => ({})
-	},
-	Single: {
-		screen: Single,
 	}
 }, {
 	contentComponent: props => menu(props)
@@ -103,21 +100,13 @@ const LoginDrawer = createDrawerNavigator({
 });
 
 
-const hiddenDrawerItems = [
-	'Single'
-];
-
 function menu(props) {
-	const clonedProps = {
-		...props,
-		items: props.items.filter(item => !hiddenDrawerItems.includes(item.key))
-	};
 	return (
 
-		<ScrollView>
+		<ScrollView navigation={props}>
 			<SafeAreaView>
 				<Text>Header</Text>
-				<DrawerItems {...clonedProps} />
+				<DrawerItems {...props} />
 			</SafeAreaView>
 		</ScrollView>
 	)
