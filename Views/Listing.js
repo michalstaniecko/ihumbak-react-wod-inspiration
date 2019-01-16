@@ -147,6 +147,7 @@ export default class Listing extends Component {
 
 	render() {
 
+		console.log(this.props.ref);
 		var title = this.state.listingType === 'public' ? 'Public WODs' : 'Your WODs';
 
 		if (this.state.isLoading) {

@@ -31,7 +31,7 @@ export default class Main extends Component {
 			isLogged: user.isLogged()
 		};
 
-
+		console.log(this.props.navigation);
 	}
 
 	async componentWillMount() {

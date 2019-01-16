@@ -25,18 +25,19 @@ import {
 } from "react-navigation";
 
 
-import Logo from './Components/Logo';
 import Main from './Views/Main';
 import Listing from './Views/Listing';
-import ListingStackNavigator from './Views/ListingStack';
 import Login from './Views/Login';
-import Account from './Views/Account';
-import Logout from './Views/Logout';
 import Start from './Views/Start';
-import Single from './Views/Single';
+import HomeStackNavigator from "./Views/HomeStack";
+import MainDrawerNavigator from "./Views/MainDrawer";
+import Single from "./Views/Single";
+import Account from "./Views/Account";
+import Logout from "./Views/Logout";
 
 
-export const MainDrawer = createDrawerNavigator({
+
+const LoginDrawer = createDrawerNavigator({
 	Main: {
 		screen: Main,
 		navigationOptions: ({navigation}) => ({
@@ -45,7 +46,33 @@ export const MainDrawer = createDrawerNavigator({
 		}),
 	},
 	Listing: {
-		screen: ListingStackNavigator,
+		screen: Listing,
+		navigationOptions: ({navigation}) => ({
+			title: 'Public Workouts',
+			drawerLabel: 'Public Workouts'
+		}),
+		params: {
+			listingType: 'public'
+		}
+	},
+	Login: {
+		screen: Login,
+		navigationOptions: ({navigation}) => ({})
+	}
+});
+
+
+
+const MainDrawer = createDrawerNavigator({
+	Main: {
+		screen: Main,
+		navigationOptions: ({navigation}) => ({
+			title: 'Main Page',
+			drawerLabel: 'Main Page',
+		}),
+	},
+	Listing: {
+		screen: Listing,
 		navigationOptions: ({navigation}) => ({
 			title: 'Public Workouts',
 			drawerLabel: 'Public Workouts'
@@ -75,30 +102,23 @@ export const MainDrawer = createDrawerNavigator({
 	contentComponent: props => menu(props)
 });
 
-const LoginDrawer = createDrawerNavigator({
-	Main: {
-		screen: Main,
+
+const HomeStack = createStackNavigator({
+	MainDrawer: {
+		screen: MainDrawer,
 		navigationOptions: ({navigation}) => ({
-			title: 'Main Page',
-			drawerLabel: 'Main Page',
-		}),
-	},
-	Listing: {
-		screen: Listing,
-		navigationOptions: ({navigation}) => ({
-			title: 'Public Workouts',
-			drawerLabel: 'Public Workouts'
 		}),
 		params: {
-			listingType: 'public'
 		}
 	},
-	Login: {
-		screen: Login,
-		navigationOptions: ({navigation}) => ({})
-	}
-});
+	Single: {
+		screen: Single
+	},
+}, {
+	initialRouteName: 'MainDrawer',
+	headerMode: 'none'
 
+});
 
 function menu(props) {
 	return (
@@ -111,6 +131,8 @@ function menu(props) {
 		</ScrollView>
 	)
 }
+
+
 
 const CustomDrawerComponent = (props) => {
 	return (
@@ -150,7 +172,7 @@ const Navigation = createSwitchNavigator({
 		})
 	},
 	MainDrawer: {
-		screen: MainDrawer,
+		screen: HomeStack,
 		navigationOptions: (navigation) => ({
 			headerLeft: <Icon name="menu" onPress={() => {
 			}}/>,
@@ -182,7 +204,7 @@ export default class App extends Component {
 
 	render() {
 		return (
-			<AppContainer navigation={this.props.navigation}/>
+			<AppContainer screenProps={{rootNavigation: this.props.navigation}}/>
 
 		)
 	}

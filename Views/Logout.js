@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {} from 'react-native';
 
+import App from '../App';
 
 import {Container, Content,Text} from 'native-base';
 import user from "../Helpers/User";
@@ -23,6 +24,7 @@ export default class Logout extends Component {
 	}
 
 	_logout = () => {
+		console.log(this.props.navigation);
 		user.removeUserData(() => {
 			this.props.navigation.dispatch(setParamsAction);
 		});

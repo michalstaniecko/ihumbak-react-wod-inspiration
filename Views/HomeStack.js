@@ -9,32 +9,30 @@ import {
 
 import Listing from "./Listing";
 import Single from "./Single";
+import MainDrawerNavigator from "./MainDrawer";
 
 
-const ListingStack = createStackNavigator({
-	Listing: {
-		screen: Listing,
+const HomeStack = createStackNavigator({
+	MainDrawer: {
+		screen: MainDrawerNavigator,
 		navigationOptions: ({navigation}) => ({
-			title: 'Public Workouts',
-			drawerLabel: 'Public Workouts'
 		}),
 		params: {
-			listingType: 'public'
 		}
 	},
 	Single: {
 		screen: Single
 	},
 }, {
-	initialRouteName: 'Listing',
+	initialRouteName: 'MainDrawer',
 	headerMode: 'none'
 
 });
 
 
-const ListingStackContainer = createAppContainer(ListingStack);
+const HomeStackContainer = createAppContainer(HomeStack);
 
-export default class ListingStackNavigator extends Component {
+export default class HomeStackNavigator extends Component {
 	constructor(props) {
 		super(props);
 
@@ -42,7 +40,7 @@ export default class ListingStackNavigator extends Component {
 
 	render() {
 		return (
-			<ListingStackContainer/>
+			<HomeStackContainer  />
 		)
 	}
 
