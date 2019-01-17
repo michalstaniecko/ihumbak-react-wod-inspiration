@@ -84,6 +84,7 @@ export default class Listing extends Component {
 				title={item.title.rendered}
 				wod_description={item.wod_meta.wod_description}
 				id={item.id}
+				listingType={this.state.listingType}
 			/>
 		);
 	};
@@ -147,7 +148,6 @@ export default class Listing extends Component {
 
 	render() {
 
-		console.log(this.props.ref);
 		var title = this.state.listingType === 'public' ? 'Public WODs' : 'Your WODs';
 
 		if (this.state.isLoading) {

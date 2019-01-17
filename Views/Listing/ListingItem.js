@@ -13,7 +13,10 @@ export default class ListingItem extends Component {
 				<CardItem header bordered button
 				          onPress={() => {
 
-				          	this.props.navigation.navigate('Single');
+				          	this.props.navigation.navigate('Single', {
+				          		postID: this.props.id,
+						          status: this.props.listingType
+					          });
 				          }}>
 					<Text>{this.props.title}</Text>
 				</CardItem>

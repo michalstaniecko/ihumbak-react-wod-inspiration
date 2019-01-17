@@ -31,7 +31,6 @@ export default class Main extends Component {
 			isLogged: user.isLogged()
 		};
 
-		console.log(this.props.navigation);
 	}
 
 	async componentWillMount() {
@@ -94,6 +93,7 @@ export default class Main extends Component {
 						title={this.state.dane[0].title.rendered}
 						wod_description={this.state.dane[0].wod_meta.wod_description}
 						navigation={this.props.navigation}
+						id={this.state.dane[0].id}
 					/>
 
 				</Content>

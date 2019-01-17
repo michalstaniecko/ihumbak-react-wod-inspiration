@@ -1,4 +1,3 @@
-import user from './../../Helpers/User';
 
 const ADRES_API = "http://staging.wod-inspiration.com/wp-json/wp/v2";
 
@@ -34,4 +33,32 @@ function getListingWOD(offset = 0, items = 10, user = false) {
 			console.error(error);
 		});
 }
-export default {getListingWOD: getListingWOD};
+
+function getSingleWOD(id, status='publish', user=null) {
+	var options;
+	var url = `${ADRES_API}/wod/${id}`;
+	if (status=='private') {
+		//url = url+`&status=${status}`;
+		options = {
+			headers: {
+				'Authorization': 'Bearer ' + user.authToken
+			}
+		};
+	}
+	return fetch(url, options)
+		.then(response=>response.json())
+		.then(responseJSON => {
+			return {
+				data: responseJSON,
+				isLoading: false,
+			}
+		})
+		.catch(error=> {
+			console.error(error);
+		});
+}
+
+export default {
+	getListingWOD: getListingWOD,
+	getSingleWOD: getSingleWOD
+};
