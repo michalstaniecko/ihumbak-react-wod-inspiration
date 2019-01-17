@@ -93,6 +93,7 @@ export default class Main extends Component {
 					<ListingItem
 						title={this.state.dane[0].title.rendered}
 						wod_description={this.state.dane[0].wod_meta.wod_description}
+						navigation={this.props.navigation}
 					/>
 
 				</Content>
