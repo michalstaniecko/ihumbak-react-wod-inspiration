@@ -77,7 +77,7 @@ export default class Login extends Component {
 						this.setState({
 							validating: false
 						});
-						this.props.navigation.navigate('MainDrawer');
+						this.props.navigation.navigate('MainDrawerLoggedIn');
 					} else {
 						console.log('Failed to store auth');
 					}

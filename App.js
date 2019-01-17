@@ -104,7 +104,7 @@ const MainDrawer = createDrawerNavigator({
 
 
 const HomeStack = createStackNavigator({
-	MainDrawer: {
+	MainDrawerLoggedIn: {
 		screen: MainDrawer,
 		navigationOptions: ({navigation}) => ({
 		}),
@@ -115,7 +115,24 @@ const HomeStack = createStackNavigator({
 		screen: Single
 	},
 }, {
-	initialRouteName: 'MainDrawer',
+	initialRouteName: 'MainDrawerLoggedIn',
+	headerMode: 'none'
+
+});
+
+const HomeLoggedOutStack = createStackNavigator({
+	MainDrawerLoggedOut: {
+		screen: LoginDrawer,
+		navigationOptions: ({navigation}) => ({
+		}),
+		params: {
+		}
+	},
+	Single: {
+		screen: Single
+	},
+}, {
+	initialRouteName: 'MainDrawerLoggedOut',
 	headerMode: 'none'
 
 });
@@ -164,7 +181,7 @@ const Navigation = createSwitchNavigator({
 		screen: Start,
 	},
 	LoginDrawer: {
-		screen: LoginDrawer,
+		screen: HomeLoggedOutStack,
 		navigationOptions: ({navigation}) => ({
 			title: 'Login Page',
 			headerLeft: <Icon name="menu" onPress={() => {
