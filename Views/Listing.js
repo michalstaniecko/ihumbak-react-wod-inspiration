@@ -19,6 +19,7 @@ import user from './../Helpers/User';
 import s from './../Styles/Bootstrap';
 import styles from './../Styles/Styles';
 import TopBar from './../Components/Header';
+import FabAddWOD from "../Components/FabAddWOD";
 
 
 export default class Listing extends Component {
@@ -34,7 +35,7 @@ export default class Listing extends Component {
 		this.state = {
 			isLoading: true,
 			offset: 0,
-			refreshing: false,
+			refreshing: true,
 			listingType: this.props.navigation.state.params.listingType,
 			next: true
 		};
@@ -49,9 +50,10 @@ export default class Listing extends Component {
 					user: userData
 				});
 			});
-		} else if (this.state.listingType==='public') {
-			this.getListWOD();
-		}
+		} else
+			if (this.state.listingType === 'public') {
+				this.getListWOD();
+			}
 	}
 
 	getListWOD(user) {
@@ -115,7 +117,7 @@ export default class Listing extends Component {
 		}
 	};
 
-	setScrollViewHeight(layout,event) {
+	setScrollViewHeight(layout, event) {
 		console.log(event);
 		this.setState({scrollViewHeight: layout.height});
 	}
@@ -141,7 +143,7 @@ export default class Listing extends Component {
 		this.getListWOD(this.state.user);
 	};
 
-	isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
+	isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
 
 		return layoutMeasurement.height + contentOffset.y >= contentSize.height - 1;
 	};
@@ -150,46 +152,41 @@ export default class Listing extends Component {
 
 		var title = this.state.listingType === 'public' ? 'Public WODs' : 'Your WODs';
 
-		if (this.state.isLoading) {
-			return (
-				<View>
 
-					<TopBar/>
-					<Text>isLoading</Text>
-				</View>
-			)
-		}
 		return (
 			<Container>
 
 				<TopBar title={this.state.listingType} navigation={this.props.navigation}/>
 
-				<Content
-					padder
-					onScroll={({ nativeEvent }) => {
-						if (this.isCloseToBottom(nativeEvent)) {
-							if (!this.state.refreshing) {
-								this._loadMore();
+				<View style={{flex: 1}}>
+					<Content
+						padder
+						onScroll={({nativeEvent}) => {
+							if (this.isCloseToBottom(nativeEvent)) {
+								if (!this.state.refreshing) {
+									this._loadMore();
+								}
 							}
+						}}
+						refreshControl={
+							<RefreshControl
+								refreshing={this.state.refreshing}
+								onRefresh={this._onRefresh}
+							/>
 						}
-					}}
-					refreshControl={
-						<RefreshControl
-							refreshing={this.state.refreshing}
-							onRefresh={this._onRefresh}
-						/>
-					}
-				>
+					>
 
-					<FlatList data={this.state.dane}
-					          renderItem={this._renderListing}
-					          keyExtractor={({id}, index) => id.toString()}
-					          onLayout={(event) => {
-						          this.setFlatListHeight(event.nativeEvent.layout.height)
-					          }}
-					          style={[s.p2]}
-					/>
-				</Content>
+						<FlatList data={this.state.dane}
+						          renderItem={this._renderListing}
+						          keyExtractor={({id}, index) => id.toString()}
+						          onLayout={(event) => {
+							          this.setFlatListHeight(event.nativeEvent.layout.height)
+						          }}
+						          style={[s.p2]}
+						/>
+					</Content>
+					<FabAddWOD/>
+				</View>
 			</Container>
 		);
 	}

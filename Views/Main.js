@@ -14,6 +14,7 @@ import user from './../Helpers/User';
 
 //import s from './../Styles/Bootstrap';
 import styles from './../Styles/Styles';
+import FabAddWOD from "../Components/FabAddWOD";
 
 
 export default class Main extends Component {
@@ -75,28 +76,28 @@ export default class Main extends Component {
 			<Container>
 
 				<TopBar title="Main Page" navigation={this.props.navigation}/>
-
-				<Content
-					padder
-					refreshControl={
-						<RefreshControl
-							refreshing={this.state.refreshing}
-							onRefresh={this._onRefresh}
+				<View style={{flex:1}}>
+					<Content
+						padder
+						refreshControl={
+							<RefreshControl
+								refreshing={this.state.refreshing}
+								onRefresh={this._onRefresh}
+							/>
+						}>
+						<Greeting navigation={this.props.navigation}/>
+						<H2 style={[]}>
+							{'Workout of the Day'}
+						</H2>
+						<ListingItem
+							title={this.state.dane[0].title.rendered}
+							wod_description={this.state.dane[0].wod_meta.wod_description}
+							navigation={this.props.navigation}
+							id={this.state.dane[0].id}
 						/>
-					}>
-
-					<Greeting navigation={this.props.navigation}/>
-					<H2 style={[]}>
-						{'Workout of the Day'}
-					</H2>
-					<ListingItem
-						title={this.state.dane[0].title.rendered}
-						wod_description={this.state.dane[0].wod_meta.wod_description}
-						navigation={this.props.navigation}
-						id={this.state.dane[0].id}
-					/>
-
-				</Content>
+					</Content>
+					<FabAddWOD/>
+				</View>
 			</Container>
 		)
 	}

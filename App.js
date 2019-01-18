@@ -34,6 +34,7 @@ import MainDrawerNavigator from "./Views/MainDrawer";
 import Single from "./Views/Single";
 import Account from "./Views/Account";
 import Logout from "./Views/Logout";
+import AddWOD from "./Views/AddWOD";
 
 
 
@@ -114,6 +115,9 @@ const HomeStack = createStackNavigator({
 	Single: {
 		screen: Single
 	},
+	AddWOD: {
+		screen: AddWOD
+	}
 }, {
 	initialRouteName: 'MainDrawerLoggedIn',
 	headerMode: 'none'
