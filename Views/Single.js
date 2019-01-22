@@ -21,7 +21,6 @@ export default class Account extends Component {
 
 	componentDidMount() {
 		this._getDetailItem(this.state.postID, this.state.status);
-		console.log(this.state.postID, this.state.status);
 	}
 
 	_getDetailItem(postID, status) {
@@ -42,7 +41,6 @@ export default class Account extends Component {
 		} else {
 			ListingData.getSingleWOD(postID, status)
 				.then(data => {
-					console.log(data);
 					this.setState({
 						postTitle: data.data.title.rendered,
 						postDescription: data.data.wod_meta.wod_description,
