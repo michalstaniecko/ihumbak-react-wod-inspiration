@@ -11,6 +11,7 @@ import {
 	StatusBar, SafeAreaView
 } from 'react-native';
 import {Container, Content, Text} from 'native-base';
+import {NavigationEvents} from 'react-navigation';
 import ListingData from './Listing/ListingData';
 import ListingItem from './Listing/ListingItem';
 
@@ -37,7 +38,7 @@ export default class Listing extends Component {
 			offset: 0,
 			refreshing: true,
 			listingType: this.props.navigation.state.params.listingType,
-			next: true
+			next: true,
 		};
 	}
 
@@ -155,7 +156,13 @@ export default class Listing extends Component {
 
 		return (
 			<Container>
-
+				<NavigationEvents
+					onWillFocus = {payload => {
+						if (payload.action.params && payload.action.params.refreshListing) {
+							this._onRefresh();
+						}
+					}}
+					/>
 				<TopBar title={this.state.listingType} navigation={this.props.navigation}/>
 
 				<View style={{flex: 1}}>

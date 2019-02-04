@@ -35,7 +35,7 @@ export default class AddWOD extends Component {
 			var token = user.authToken;
 			let formData = new FormData();
 			formData.append('title', this.state.workoutName);
-			formData.append('wod_meta', '{"meta_name":"wod_description", "value":"'+this.state.workoutDescription+'"}');
+			formData.append('wod_meta', `{"meta_name":"wod_description", "value":"${this.state.workoutDescription}"}`);
 			formData.append('status', 'private');
 			return fetch('http://staging.wod-inspiration.com/wp-json/wp/v2/wod/', {
 				method: 'POST',
@@ -46,7 +46,11 @@ export default class AddWOD extends Component {
 			})
 				.then((response) => response.json())
 				.then((responseJson) => {
-					console.log(responseJson);
+					this.props.navigation.navigate('Single', {
+						postID: responseJson.id,
+						status: 'private',
+						refreshListing: true
+					});
 				})
 				.catch((error) => {
 					console.error(error);
@@ -94,7 +98,7 @@ export default class AddWOD extends Component {
 							placeholder="Workout Description"
 							bordered
 							rowSpan={5}
-							onChangeText={(text) => this.setState({workoutDescription: text})}
+							onChangeText={(text) => this.setState({workoutDescription: text.replace(/\n/g, '\\n')})}
 						/>
 
 						<Button style={{marginTop:5}} onPress={() => this._addPost()}><Text>Add Workout</Text></Button>

@@ -6,6 +6,7 @@ import {Container, Content, Text, Button, Left, Body, Title, Right, Icon, Header
 import ListingData from './Listing/ListingData';
 import user from './../Helpers/User';
 import {RefreshControl} from "react-native";
+import {NavigationActions} from 'react-navigation';
 import SingleItem from "./Single/SingleItem";
 
 export default class Account extends Component {
@@ -14,6 +15,7 @@ export default class Account extends Component {
 		this.state = {
 			postID: this.props.navigation.getParam('postID'),
 			status: this.props.navigation.getParam('status'),
+			refreshListing: this.props.navigation.getParam('refreshListing') ? this.props.navigation.getParam('refreshListing') : false,
 			isLoading: true
 		}
 
@@ -24,12 +26,11 @@ export default class Account extends Component {
 	}
 
 	_getDetailItem(postID, status) {
-		if (status=='private') {
+		if (status == 'private') {
 			user.getUserData(response => {
 				var userData = JSON.parse(response);
 				ListingData.getSingleWOD(postID, status, userData)
 					.then(data => {
-						console.log(data);
 						this.setState({
 							postTitle: data.data.title.rendered,
 							postDescription: data.data.wod_meta.wod_description,
@@ -64,7 +65,11 @@ export default class Account extends Component {
 					<Left>
 						<Button transparent
 						        onPress={() => {
-							        this.props.navigation.goBack()
+							        const setNavigationAction = NavigationActions.navigate({
+								        routeName: 'MainDrawerLoggedIn',
+								        params: {refreshListing: this.state.refreshListing }
+							        });
+							        this.props.navigation.dispatch(setNavigationAction);
 						        }}
 						>
 							<Icon name="arrow-back"/>
@@ -82,8 +87,8 @@ export default class Account extends Component {
 					</Right>
 				</Header>
 				<Content padder>
-					<SingleItem title={this.state.postTitle} description={this.state.postDescription} />
-					<Button  onPress={() => this.props.navigation.goBack()}><Text>Go Back</Text></Button>
+					<SingleItem title={this.state.postTitle} description={this.state.postDescription}/>
+					<Button onPress={() => this.props.navigation.goBack()}><Text>Go Back</Text></Button>
 				</Content>
 			</Container>
 		)
